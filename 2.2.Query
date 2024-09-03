@@ -1,0 +1,14 @@
+-- 2.2 Update your 2.1 query by adding the name of the location and also add the average days amount between actual start date and actual end date per each location.
+SELECT 
+  work_ord_rr.LocationID, 
+  MAX(loc.Name) AS Location_Name,
+  count(DISTINCT work_ord_rr.WorkOrderID) AS no_work_orders, 
+  count(DISTINCT work_ord_rr.ProductID) AS no_unique_products, 
+  SUM(work_ord_rr.ActualCost) AS actual_cost,
+  ROUND(AVG(DATE_DIFF(work_ord_rr.ActualEndDate, work_ord_rr.ActualStartDate, day)), 2) AS avg_days_diff
+FROM `adwentureworks_db.workorderrouting` AS work_ord_rr
+INNER JOIN `adwentureworks_db.location` AS loc
+  ON work_ord_rr.LocationID = loc.LocationID
+WHERE work_ord_rr.ActualStartDate BETWEEN '2003-12-31' AND '2004-01-31'
+GROUP BY work_ord_rr.LocationID
+ORDER BY actual_cost DESC;

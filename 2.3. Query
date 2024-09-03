@@ -1,0 +1,9 @@
+--2.3 Select all the expensive work Orders (above 300 actual cost) that happened throught January 2004.
+SELECT 
+  DISTINCT WorkOrderID, 
+  SUM(ActualCost) as actual_cost
+FROM `adwentureworks_db.workorderrouting`
+GROUP BY WorkOrderID
+HAVING SUM(ActualCost) > 300 
+  AND EXTRACT(YEAR FROM MAX(ActualStartDate)) = 2004 
+  AND EXTRACT(MONTH FROM MAX(ActualStartDate)) = 1;

@@ -1,0 +1,13 @@
+-- 1. An overview of Products. 1.1 You’ve been asked to extract the data on products from the Product table where there exists a product subcategory. And also include the name of the ProductSubcategory.Columns needed: ProductId, Name, ProductNumber, size, color, ProductSubcategoryId, Subcategory name.Order results by SubCategory name.
+SELECT 
+  prod.ProductId, 
+  prod.name, 
+  prod.ProductNumber, 
+  prod.Size, 
+  prod.color, 
+  prodsub.ProductSubcategoryId, 
+  prodsub.Name AS SubCategory
+FROM `tc-da-1.adwentureworks_db.product` AS prod
+INNER JOIN `tc-da-1.adwentureworks_db.productsubcategory` AS prodsub
+ON prod.ProductSubcategoryID = prodsub.ProductSubcategoryID
+ORDER BY prodsub.Name;

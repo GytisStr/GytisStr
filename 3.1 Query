@@ -1,0 +1,25 @@
+--3.1 Your colleague has written a query to find the list of orders connected to special offers. The query works fine but the numbers are off, investigate where the potential issue lies.
+SELECT
+    sales_detail.SalesOrderID, -- Changed the d to a D.
+    sales_detail.OrderQty,
+    ROUND(sales_detail.UnitPrice, 2) AS UnitPrice, -- Rounded, as cents do not mean a lot in such cases.
+    ROUND(sales_detail.LineTotal, 2) AS LineTotal, -- Rounded, as cents do not mean a lot in such cases.
+    sales_detail.ProductID,    -- Changed the d to a D.
+    sales_detail.SpecialOfferID, -- Deleted the s_offer_product.ModifiedDate as it was creating duplicates in the data set
+    spec_offer.Category,
+    spec_offer.Description
+FROM 
+    `tc-da-1.adwentureworks_db.salesorderdetail` AS sales_detail
+LEFT JOIN 
+    `tc-da-1.adwentureworks_db.specialofferproduct` AS s_offer_product -- changed the alias so that it would not interfere with the spec_offer alias.
+    ON sales_detail.ProductID = s_offer_product.ProductID
+    AND sales_detail.SpecialOfferID = s_offer_product.SpecialOfferID -- adding this to be sure.
+LEFT JOIN 
+    `tc-da-1.adwentureworks_db.specialoffer` AS spec_offer
+    ON
+    sales_detail.SpecialOfferID = spec_offer.SpecialOfferID
+WHERE
+      spec_offer.SpecialOfferID > 1 -- Added this line to filter out, the data in a way that only discounted offers would be provided.
+ORDER BY 
+    sales_detail.LineTotal DESC;  -- Adding sales_detail in LineTotal
+

@@ -1,0 +1,16 @@
+-- 1.2 In 1.1 query you have a product subcategory but see that you could use the category name. Find and add the product category name. Afterwards order the results by Category name.
+SELECT 
+  prod.ProductId, 
+  prod.Name, 
+  prod.ProductNumber, 
+  prod.Size, 
+  prod.Color, 
+  prodsubc.ProductSubcategoryId,
+  prodsubc.Name AS SubCategory,
+  prodcat.Name AS Category
+FROM `tc-da-1.adwentureworks_db.product` AS prod
+INNER JOIN `tc-da-1.adwentureworks_db.productsubcategory` AS prodsubc
+  ON prod.ProductSubcategoryID = prodsubc.ProductSubcategoryID
+INNER JOIN `tc-da-1.adwentureworks_db.productcategory` AS prodcat
+  ON prodsubc.ProductCategoryID = prodcat.ProductCategoryID
+ORDER BY prodcat.Name;

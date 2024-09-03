@@ -1,0 +1,17 @@
+-- 1.3 Use the established query to select the most expensive (price listed over 2000) bikes that are still actively sold (does not have a sales end date). Order the results from most to least expensive bike.
+SELECT 
+  prod.ProductId, 
+  prod.Name, 
+  prod.ProductNumber, 
+  prod.Size, 
+  prod.Color, 
+  prodsubc.ProductSubcategoryId, 
+  prodsubc.Name AS Category,
+  prod.ListPrice
+FROM `tc-da-1.adwentureworks_db.product` AS prod
+INNER JOIN `tc-da-1.adwentureworks_db.productsubcategory` AS prodsubc
+  ON prod.ProductSubcategoryID = prodsubc.ProductSubcategoryID
+INNER JOIN `tc-da-1.adwentureworks_db.productcategory` AS prodcat
+  ON prodsubc.ProductCategoryID = prodcat.ProductCategoryID
+WHERE prodcat.Name = 'Bikes' AND prod.SellEndDate IS NULL AND prod.ListPrice > 2000
+ORDER BY prod.ListPrice DESC

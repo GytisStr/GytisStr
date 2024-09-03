@@ -1,0 +1,41 @@
+WITH event_counts AS (
+    SELECT 
+        re.event_name,
+        COUNT(DISTINCT CASE WHEN re.country = 'United States' THEN re.user_pseudo_id END) AS `1st_Country_events`,
+        COUNT(DISTINCT CASE WHEN re.country = 'India' THEN re.user_pseudo_id END) AS `2nd_Country_events`,
+        COUNT(DISTINCT CASE WHEN re.country = 'Canada' THEN re.user_pseudo_id END) AS `3rd_Country_events`,
+        COUNT(DISTINCT CASE WHEN re.country IN ('Canada', 'India', 'United States') THEN re.user_pseudo_id END) as Top_event_count
+    FROM 
+        `turing_data_analytics.raw_events` re
+    WHERE 
+        re.event_name IN ('user_engagement', 'scroll', 'view_promotion', 'add_to_cart', 'begin_checkout', 'purchase')
+    GROUP BY 
+        re.event_name
+),
+first_event_counts AS (
+    SELECT 
+        COUNT(DISTINCT CASE WHEN re.country = 'United States' THEN re.user_pseudo_id END) AS US_first_event_count,
+        COUNT(DISTINCT CASE WHEN re.country = 'India' THEN re.user_pseudo_id END) AS IND_first_event_count,
+        COUNT(DISTINCT CASE WHEN re.country = 'Canada' THEN re.user_pseudo_id END) AS CA_first_event_count,
+        COUNT(DISTINCT CASE WHEN re.country IN ('Canada', 'India', 'United States') THEN re.user_pseudo_id END) as Top_first_event_count
+    FROM 
+        `turing_data_analytics.raw_events` re
+    WHERE 
+        re.event_name = 'user_engagement'
+)
+
+SELECT 
+    ROW_NUMBER() OVER (ORDER BY `1st_Country_events` DESC) AS event_order,
+    ec.event_name,
+    ec.`1st_Country_events`,
+    ec.`2nd_Country_events`,
+    ec.`3rd_Country_events`,
+    (ec.Top_event_count / f.Top_first_event_count) * 100 AS Full_perc,
+    (ec.`1st_Country_events` / f.US_first_event_count) * 100 AS `1st_country_perc_drop`,
+    (ec.`2nd_Country_events` / f.IND_first_event_count) * 100 AS `2nd_country_perc_drop`,
+    (ec.`3rd_Country_events` / f.CA_first_event_count) * 100 AS `3rd_country_perc_drop`
+FROM 
+    event_counts ec,
+    first_event_counts f
+ORDER BY 
+    ec.`1st_Country_events` DESC;

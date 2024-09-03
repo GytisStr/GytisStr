@@ -1,0 +1,25 @@
+--3.2 Your colleague has written this query to collect basic Vendor information. The query does not work, look into the query and find ways to fix it. Can you provide any feedback on how to make this query be easier to debug/read?
+-- I corrected the column aliases in the SELECT clause (c.AddressId to vendor_address.AddressId, d.City to address.City).
+SELECT 
+    vendor.VendorId AS VendorId,--Added the distinction VendorId, as just Id does not really give a lot of context.
+    vendor_contact.ContactId,
+    vendor_contact.ContactTypeId,
+    vendor.Name,
+    vendor.CreditRating,
+    vendor.ActiveFlag,
+    vendor_address.AddressId,
+    address.City
+FROM 
+    `tc-da-1.adwentureworks_db.vendor` AS vendor -- I used single quotes ' around table names with backticks `. In BigQuery, backticks are used for escaping table names, not single quotes.
+LEFT JOIN 
+    `tc-da-1.adwentureworks_db.vendorcontact` AS vendor_contact -- I used single quotes ' around table names with backticks `. In BigQuery, backticks are used for escaping table names, not single quotes. 
+ON 
+    vendor.VendorId = vendor_contact.VendorId 
+LEFT JOIN 
+    `tc-da-1.adwentureworks_db.vendoraddress` AS vendor_address -- I used single quotes ' around table names with backticks `. In BigQuery, backticks are used for escaping table names, not single quotes. Corrected table aliases in the LEFT JOIN clauses (vendor_adress to vendor_address). 
+ON 
+    vendor.VendorId = vendor_address.VendorId -- I updated the join conditions to match the correct columns (vendor_address.VendorId = address.VendorId changed to vendor_address.AddressId = address.AddressId).
+LEFT JOIN 
+    `tc-da-1.adwentureworks_db.address` AS address -- I used single quotes ' around table names with backticks `. In BigQuery, backticks are used for escaping table names, not single quotes.
+ON 
+    vendor_address.AddressId = address.AddressId;
