@@ -17,7 +17,8 @@
 
 - ⚡ Fun fact: I like to use tabs over spaces  
   
-- 🧐 Some of my Looker projects https://lookerstudio.google.com/s/o_zRwzj3wts (Report) and https://lookerstudio.google.com/s/t9wXIieRC_k (Cohorts and Churn)
+- 🧐 Some of my Looker projects https://lookerstudio.google.com/s/o_zRwzj3wts (Report), https://lookerstudio.google.com/s/t9wXIieRC_k (Cohorts and Churn), https://lookerstudio.google.com/s/v8iyShWRoic (Olist Report (Payments/Monetisation).
+
 <br/>  
 
 
