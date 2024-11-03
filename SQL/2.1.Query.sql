@@ -1,0 +1,9 @@
+-- 2.1 Create an aggregated query to select the: Number of unique work orders. Number of unique products. Total actual cost. For each location Id from the 'workoderrouting' table for orders in January 2004.
+SELECT 
+  LocationID, 
+  count(DISTINCT WorkOrderID) AS no_work_orders, 
+  count(DISTINCT ProductID) AS no_unique_products, 
+  SUM(ActualCost) AS actual_cost,
+FROM `adwentureworks_db.workorderrouting`
+WHERE ActualStartDate BETWEEN '2003-12-31' AND '2004-01-31'
+GROUP BY LocationID
