@@ -1,0 +1,11 @@
+--1. Analyze the data in raw_events table. Spend time querying the table, getting more familiar with data. Identify events captured by users visiting the website.
+WITH duplicate_check AS (
+  SELECT DISTINCT event_name, user_pseudo_id
+  FROM `turing_data_analytics.raw_events`
+)
+
+SELECT *
+FROM duplicate_check dc
+JOIN `turing_data_analytics.raw_events` re
+ON re.user_pseudo_id = dc.user_pseudo_id
+AND re.event_name = dc.event_name
