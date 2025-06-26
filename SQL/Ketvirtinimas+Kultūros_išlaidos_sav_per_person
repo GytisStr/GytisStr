@@ -1,0 +1,12 @@
+SELECT 
+  g.Ataskaitinis_periodas,
+  g.Subjektas,
+  g.`Išlaidų_grupės_lygis_2`,
+  g.Vykdymo_suma,
+  p.`Gyventojų_sk`,
+  ROUND(g.Vykdymo_suma / p.`Gyventojų_sk`, 2) AS Vykdymas_vienam_gyventojui
+FROM Sumos_pagal_level_2 g
+LEFT JOIN Ketvirtinimas p
+  ON g.Ataskaitinis_periodas = p.Ataskaitinis_periodas
+ AND g.Subjektas = p.Miestas
+WHERE g.`Išlaidų_grupės_lygis_2` = 'Iš viso'
