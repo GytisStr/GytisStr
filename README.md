@@ -1,6 +1,3 @@
-<div align="center">
-<img src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fa.abcnews.com%2Fimages%2FTechnology%2FCT_waving_bear_madrid_zoo_sk_140325_3x2_1600.jpg&f=1&nofb=1&ipt=aad17dd94835c3c9c8bc220baec843aec8c495da2711f991ee149e45c9b78d74&ipo=images" align="center" style="width: 100%" />
-</div>  
 
 ### <div align="center">I'm Gytis — a committed Data Analyst 👨‍💻 Currently working at the Lithuanian Council for Culture 🇱🇹</div>  
 
